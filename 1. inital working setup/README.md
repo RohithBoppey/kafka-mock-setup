@@ -4,6 +4,8 @@
 
 This setup uses Docker Compose for simplified Kafka deployment, preventing complex installation requirements. After running `docker compose up` and verifying 2 active containers, you can use 2 terminals for producer and consumer operations.
 
+<img width="1903" height="528" alt="image" src="https://github.com/user-attachments/assets/8aee6b4c-1420-4772-a87d-33757e8640ff" />
+
 **Key Benefit**: If the consumer goes down, messages are stored in the broker and consumed all at once when the consumer comes back online.
 
 ---
