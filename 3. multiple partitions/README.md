@@ -271,7 +271,6 @@ You are 100% correct. Running the `producer.py` script in two (or two hundred) s
 * The system doesn't change at all; it just gets more messages, which is exactly what it's built for.
 
 
-
 ### 2. Downstream Consumer Logic
 
 Again, you are 100% correct. The consumer logic **does not change at all.**
@@ -280,3 +279,9 @@ Again, you are 100% correct. The consumer logic **does not change at all.**
 * It just continues to poll all partitions it's assigned to (in this case, all 4) and consumes messages as they appear, regardless of their source.
 
 This is the beauty of Kafka's "decoupling": the producers and consumers are completely independent of each other. All they share is the topic.
+
+### 3. Multiple consumers
+
+<img width="1933" height="530" alt="image" src="https://github.com/user-attachments/assets/270242c3-9f11-45dd-a41b-6099a8610c10" />
+* As you can see, the load is now redistributed among the 2 consumers --> consumer 1 is taking partition 2,3 & consumer 2 is taking partition 0,1
+* So when there is only 1 consumer, then all the paritions it is looking into, but right when C1 is running & then I activate C2, then immediately rebalancing is happening
