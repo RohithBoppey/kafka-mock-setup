@@ -53,20 +53,25 @@ try:
         #    Kafka will hash this key to pick a partition.
         key_bytes = str(random_id).encode('utf-8')
 
-        # 3. Create the message, including the ID
-        message = {
-            'message_id': message_counter,
-            'user_id': random_id, # We use the random ID as a "user_id"
-            'content': f'This is message number {message_counter}',
-            'timestamp': time.time()
-        }
+        if message_counter % 5 == 0:
+            # Send a "poison pill" - a plain string, not a dict
+            message = "this is not valid json, just a string"
+            print(f"*** Sending POISON PILL: {message} ***")
+        else:
+            # Send a normal, valid message
+            message = {
+                'message_id': message_counter,
+                'user_id': random_id,
+                'content': f'This is message number {message_counter}',
+                'timestamp': time.time()
+            }
 
         # 4. Send the message with the key
         #    We also attach our callback to see the partition
         producer.send(
             TOPIC_NAME, 
             value=message, 
-            # key=key_bytes  # COMMENT THIS FOR ROUND ROBIN
+            key=key_bytes 
         ).add_callback(on_send_success)
         
         # We removed the old synchronous print
